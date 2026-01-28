@@ -18,7 +18,7 @@ else
                 <th>Date</th>
                 <th aria-label="Temperature in Celsius">Temp. (C)</th>
                 <th aria-label="Temperature in Fahrenheit">Temp. (F)</th>
-                <th>Summary</th>
+                <th class="desktop-only">Summary</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@ else
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
                     <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td class="desktop-only">@forecast.Summary</td>
                 </tr>
             }
         </tbody>
