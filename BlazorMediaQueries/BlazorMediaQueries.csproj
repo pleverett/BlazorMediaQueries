@@ -7,4 +7,18 @@
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
 
+  <Target Name="NpmInstall" BeforeTargets="BuildTailwindCss"
+          Condition="!Exists('$(MSBuildProjectDirectory)\node_modules')">
+    <Message Importance="high" Text="Running npm install..." />
+    <Exec Command="npm install" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
+  <Target Name="BuildTailwindCss" BeforeTargets="Build">
+    <Message Importance="high" Text="Building Tailwind CSS ($(Configuration))..." />
+    <Exec Command="npm run build:css:prod" WorkingDirectory="$(MSBuildProjectDirectory)"
+          Condition="'$(Configuration)' == 'Release'" />
+    <Exec Command="npm run build:css" WorkingDirectory="$(MSBuildProjectDirectory)"
+          Condition="'$(Configuration)' != 'Release'" />
+  </Target>
+
 </Project>

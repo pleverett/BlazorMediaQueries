@@ -1,14 +1,24 @@
 # BlazorMediaQueries - Workspace Instructions
 
-A .NET 10.0 Blazor Server application demonstrating responsive design patterns with media queries and interactive components.
+A .NET 10.0 Blazor Server application demonstrating responsive design patterns with Tailwind CSS 3.4 + DaisyUI and interactive components.
 
 ## Build and Test
 
 ```powershell
-# Build the project
+# Navigate to project directory for npm commands
+cd BlazorMediaQueries
+
+# Build CSS (required before running the app)
+npm run build:css
+
+# Watch CSS during development (auto-rebuild on changes)
+npm run watch:css
+
+# Build the project (from repository root)
+cd ..
 dotnet build
 
-# Run the application
+# Run the application (from repository root)
 dotnet run --project BlazorMediaQueries
 
 # Application URLs
@@ -17,7 +27,20 @@ dotnet run --project BlazorMediaQueries
 
 # Restore dependencies
 dotnet restore
+cd BlazorMediaQueries; npm install  # For Tailwind CSS and DaisyUI
 ```
+
+### CSS Build Process
+
+- **Tailwind CSS 3.4 + DaisyUI**: Using npm-based build system inside project folder
+- **Input**: `wwwroot/css/tailwind.input.css` (relative to BlazorMediaQueries/)
+- **Output**: `wwwroot/css/tailwind.output.css` (git-ignored)
+- **Config**: `tailwind.config.js` inside BlazorMediaQueries/ folder
+- **npm files**: `package.json`, `package-lock.json`, `node_modules/` all inside BlazorMediaQueries/
+- **VS Code Tasks**: Use Tasks > Run Task > "watch-css" for automatic rebuilds (auto-navigates to project folder)
+- **Production**: Use `npm run build:css:prod` for minified output
+
+**Important**: Always run `npm run build:css` before `dotnet run` to ensure CSS is up to date.
 
 ## Architecture
 
@@ -33,9 +56,9 @@ Components/
 ├── App.razor              # Root component with render mode
 ├── Routes.razor           # Routing configuration
 ├── Layout/                # Layout and navigation components
-│   ├── MainLayout.razor   # Main layout with sidebar pattern
-│   ├── NavMenu.razor      # Bootstrap navbar navigation
-│   └── ReconnectModal.razor # Blazor circuit reconnection handling
+│   ├── MainLayout.razor   # Main layout with Tailwind gradient sidebar
+│   ├── NavMenu.razor      # Navigation with Tailwind utilities
+│   └── ReconnectModal.razor # Blazor circuit reconnection (Tailwind + minimal state CSS)
 └── Pages/                 # Routable page components with @page directive
     ├── Home.razor
     ├── Counter.razor
@@ -47,22 +70,31 @@ Components/
 ## Code Conventions
 
 ### File Organization
-- **Co-located CSS**: Component and corresponding `.razor.css` in same directory (e.g., `MainLayout.razor` + `MainLayout.razor.css`)
+- **Co-located CSS**: Minimal scoped `.razor.css` files (only ReconnectModal.razor.css for Blazor state logic)
 - **Co-located JavaScript**: Module-scoped `.razor.js` files for JavaScript interop (e.g., `ReconnectModal.razor.js`)
+- **Tailwind utilities**: Most styling uses Tailwind utility classes directly in components
 - **Scoped CSS**: Compiled into `BlazorMediaQueries.styles.css` bundle automatically
 - **Page components**: Decorated with `@page` directive and placed in `Pages/` folder
 - **Layout components**: In `Layout/` subfolder, inherit from `LayoutComponentBase`
 
 ### Naming Conventions
 - **Components**: PascalCase (e.g., `Counter.razor`, `MainLayout.razor`, `NavMenu.razor`)
-- **CSS classes**: kebab-case (e.g., `.navbar-toggler`, `.desktop-only`, `.content`)
+- **Tailwind classes**: Use semantic utility classes (e.g., `flex`, `md:hidden`, `bg-gradient-to-b`)
+- **DaisyUI components**: Use component classes (e.g., `btn btn-primary`, `table table-zebra`)
 - **C# properties/methods**: PascalCase (e.g., `TemperatureC`, `IncrementCount()`)
 
 ### Responsive Design Patterns
-- **Mobile-first approach**: Default styles target mobile, enhancements for larger screens
-- **Breakpoint**: Media query at `min-width: 641px` for tablet/desktop layouts
-- **Responsive classes**: Use `.desktop-only` pattern to hide elements on small screens
-- **Example**: `Weather.razor.css` demonstrates hiding table columns on mobile
+- **Mobile-first approach**: Tailwind's default approach - base styles for mobile, responsive variants for larger screens
+- **Breakpoint**: Tailwind `md:` breakpoint at `768px` for tablet/desktop layouts
+- **Responsive utilities**: Use Tailwind responsive prefixes (e.g., `hidden md:table-cell`, `md:flex-row`)
+- **Example**: `Weather.razor` uses `hidden md:table-cell` to hide Summary column on mobile
+- **Custom animations**: Defined in `tailwind.config.js` for Blazor reconnection states
+
+### Styling Approach
+- **DaisyUI components**: Use for common UI patterns (buttons, tables, navigation)
+- **Tailwind utilities**: Use for layout, spacing, colors, responsive design
+- **Minimal CSS**: Only ReconnectModal.razor.css contains custom CSS for Blazor state management
+- **No Bootstrap**: Migrated from Bootstrap 5.3.3 to Tailwind CSS 3.4 + DaisyUI 4.12.24
 
 ### Component Patterns
 - **Stateful components**: Private fields with event handlers (see `Counter.razor`)
