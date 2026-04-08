@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom utility classes and overrides can be added below */
+
+/* Preserve existing app.css custom styles if needed */

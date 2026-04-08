@@ -12,13 +12,13 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-zebra">
         <thead>
             <tr>
                 <th>Date</th>
                 <th aria-label="Temperature in Celsius">Temp. (C)</th>
                 <th aria-label="Temperature in Fahrenheit">Temp. (F)</th>
-                <th class="desktop-only">Summary</th>
+                <th class="hidden md:table-cell">Summary</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@ else
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
                     <td>@forecast.TemperatureF</td>
-                    <td class="desktop-only">@forecast.Summary</td>
+                    <td class="hidden md:table-cell">@forecast.Summary</td>
                 </tr>
             }
         </tbody>

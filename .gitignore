@@ -147,3 +147,6 @@ _Pvt_Extensions
 
 **/*appsettings.Development.json
 **/local.settings.json
+
+# Tailwind CSS generated output
+**/wwwroot/css/tailwind.output.css

@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "watch-css",
+      "type": "npm",
+      "script": "watch:css",
+      "path": "BlazorMediaQueries/",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "clear": false
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "build-css",
+      "type": "npm",
+      "script": "build:css",
+      "path": "BlazorMediaQueries/",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "build-css-prod",
+      "type": "npm",
+      "script": "build:css:prod",
+      "path": "BlazorMediaQueries/",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}
