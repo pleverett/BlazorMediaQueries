@@ -1,0 +1,74 @@
+/* =====================================================================
+   PALETTE THEMES
+   Applied via data-palette attribute on <html> element.
+   Each palette defines sidebar gradient colors and an accent color
+   used for active nav items and primary action buttons.
+   ===================================================================== */
+
+/* --- Default (Indigo / Slate) ---------------------------------------- */
+:root,
+[data-palette="default"] {
+    --sidebar-from:  #0f172a; /* slate-900  */
+    --sidebar-to:    #1e1b4b; /* indigo-950 */
+    --accent:        #4f46e5; /* indigo-600 */
+    --accent-hover:  #4338ca; /* indigo-700 */
+}
+
+/* --- Peach (cherry-rose accent, vintage-grape sidebar) --------------- */
+[data-palette="peach"] {
+    --sidebar-from:  #150f14; /* vintage-grape-950 */
+    --sidebar-to:    #2c0710; /* cherry-rose-900   */
+    --accent:        #dd2251; /* cherry-rose-500   */
+    --accent-hover:  #b01c41; /* cherry-rose-600   */
+}
+
+/* --- CDPH Blues (twitter-blue accent, klein-blue sidebar) ------------ */
+[data-palette="cdph"] {
+    --sidebar-from:  #000d33; /* international-klein-blue-900 */
+    --sidebar-to:    #001d33; /* twitter-blue-900             */
+    --accent:        #0091ff; /* twitter-blue-500             */
+    --accent-hover:  #0074cc; /* twitter-blue-600             */
+}
+
+/* --- Blues (majorelle-blue accent, klein-blue/majorelle sidebar) ----- */
+[data-palette="blues"] {
+    --sidebar-from:  #010923; /* international-klein-blue-950 */
+    --sidebar-to:    #08051f; /* majorelle-blue-950           */
+    --accent:        #3b22dd; /* majorelle-blue-500           */
+    --accent-hover:  #2f1cb0; /* majorelle-blue-600           */
+}
+
+/* =====================================================================
+   THEMED COMPONENTS
+   These rules consume the CSS vars above and override any
+   hardcoded Tailwind colors on the same elements.
+   ===================================================================== */
+
+/* Active NavLink — higher specificity (0,1,2) than Tailwind utilities (0,1,0) */
+nav a[aria-current] {
+    background-color: var(--accent);
+    color: white;
+}
+
+nav a[aria-current]:hover {
+    background-color: var(--accent-hover);
+    color: white;
+}
+
+/* Primary action buttons — specificity (0,1,1) beats Tailwind bg-* (0,1,0) */
+a.btn-primary,
+button.btn-primary {
+    background-color: var(--accent);
+    color: white;
+}
+
+a.btn-primary:hover,
+button.btn-primary:hover {
+    background-color: var(--accent-hover);
+}
+
+a.btn-primary:active,
+button.btn-primary:active {
+    background-color: var(--accent-hover);
+    filter: brightness(0.92);
+}

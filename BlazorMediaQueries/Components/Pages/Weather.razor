@@ -2,45 +2,78 @@
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<div class="py-8">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">Weather</h1>
+    <p class="text-slate-500 dark:text-slate-400 mb-8">This component demonstrates showing data.</p>
 
-<p>This component demonstrates showing data.</p>
+    @if (forecasts == null)
+    {
+        <!-- Loading skeleton -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden animate-pulse">
+            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                <div class="h-5 bg-slate-200 dark:bg-slate-700 rounded w-32"></div>
+            </div>
+            <div class="divide-y divide-slate-100 dark:divide-slate-700">
+                @for (int i = 0; i < 5; i++)
+                {
+                    <div class="px-6 py-4 flex gap-4">
+                        <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-24"></div>
+                        <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-16"></div>
+                        <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-16"></div>
+                        <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-20 hidden md:block"></div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <h2 class="font-semibold text-slate-900 dark:text-white">5-Day Forecast</h2>
+                <span class="text-xs text-slate-400 dark:text-slate-500">@forecasts.Length days</span>
+            </div>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="w-full text-sm">
-        <thead class="border-b border-gray-200">
-            <tr>
-                <th class="px-4 py-3 text-left font-semibold">Date</th>
-                <th class="px-4 py-3 text-left font-semibold" aria-label="Temperature in Celsius">Temp. (C)</th>
-                <th class="px-4 py-3 text-left font-semibold" aria-label="Temperature in Fahrenheit">Temp. (F)</th>
-                <th class="px-4 py-3 text-left font-semibold hidden md:table-cell">Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr class="even:bg-gray-50 border-b border-gray-100">
-                    <td class="px-4 py-2">@forecast.Date.ToShortDateString()</td>
-                    <td class="px-4 py-2">@forecast.TemperatureC</td>
-                    <td class="px-4 py-2">@forecast.TemperatureF</td>
-                    <td class="px-4 py-2 hidden md:table-cell">@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+            <table class="w-full text-sm">
+                <thead class="bg-slate-50 dark:bg-slate-900/50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" aria-label="Temperature in Celsius">Temp °C</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" aria-label="Temperature in Fahrenheit">Temp °F</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider hidden md:table-cell">Summary</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                    @foreach (var forecast in forecasts)
+                    {
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <td class="px-6 py-4 text-slate-900 dark:text-slate-100 font-medium">
+                                @forecast.Date.ToShortDateString()
+                            </td>
+                            <td class="px-6 py-4 text-slate-600 dark:text-slate-300">
+                                @forecast.TemperatureC°
+                            </td>
+                            <td class="px-6 py-4 text-slate-600 dark:text-slate-300">
+                                @forecast.TemperatureF°
+                            </td>
+                            <td class="px-6 py-4 hidden md:table-cell">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium @GetSummaryBadgeClass(forecast.TemperatureC)">
+                                    @forecast.Summary
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
 
 @code {
     private WeatherForecast[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate a loading indicator
         await Task.Delay(500);
 
         var startDate = DateOnly.FromDateTime(DateTime.Now);
@@ -52,6 +85,15 @@ else
             Summary = summaries[Random.Shared.Next(summaries.Length)]
         }).ToArray();
     }
+
+    private static string GetSummaryBadgeClass(int tempC) => tempC switch
+    {
+        < 0   => "bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300",
+        < 10  => "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
+        < 20  => "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+        < 30  => "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+        _     => "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300",
+    };
 
     private class WeatherForecast
     {

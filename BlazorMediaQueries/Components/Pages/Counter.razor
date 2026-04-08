@@ -2,17 +2,50 @@
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
+<div class="py-8">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">Counter</h1>
+    <p class="text-slate-500 dark:text-slate-400 mb-8">Click the buttons to change the count.</p>
 
-<p role="status">Current count: @currentCount</p>
+    <div class="max-w-sm">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm text-center">
 
-<button class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 active:bg-blue-800 cursor-pointer transition-colors" @onclick="IncrementCount">Click me</button>
+            <p class="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2">Current count</p>
+
+            <div role="status"
+                 class="text-7xl font-black tabular-nums leading-none mb-8 @(currentCount > 0 ? "text-indigo-600 dark:text-indigo-400" : currentCount < 0 ? "text-rose-500 dark:text-rose-400" : "text-slate-400 dark:text-slate-500")">
+                @currentCount
+            </div>
+
+            <div class="flex items-center justify-center gap-3">
+                <button @onclick="Decrement"
+                        class="w-11 h-11 rounded-full border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold text-xl transition-colors flex items-center justify-center"
+                        aria-label="Decrement">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                    </svg>
+                </button>
+
+                <button @onclick="IncrementCount"
+                        class="btn-primary px-8 h-11 font-semibold rounded-full transition-colors">
+                    Click me
+                </button>
+
+                <button @onclick="Reset"
+                        class="w-11 h-11 rounded-full border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center justify-center"
+                        aria-label="Reset">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
     private int currentCount = 0;
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
+    private void IncrementCount() => currentCount++;
+    private void Decrement() => currentCount--;
+    private void Reset() => currentCount = 0;
 }

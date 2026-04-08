@@ -1,7 +1,7 @@
 {
   "name": "blazor-media-queries",
   "version": "1.0.0",
-  "description": "Blazor Server application with Tailwind CSS and DaisyUI",
+  "description": "Blazor Server application with Tailwind CSS v4",
   "scripts": {
     "build:css": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind.input.css -o ./wwwroot/css/tailwind.output.css",
     "watch:css": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind.input.css -o ./wwwroot/css/tailwind.output.css --watch",
@@ -10,7 +10,6 @@
   "keywords": [
     "blazor",
     "tailwindcss",
-    "daisyui",
     "responsive-design"
   ],
   "author": "",
