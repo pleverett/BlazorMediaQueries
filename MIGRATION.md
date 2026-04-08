@@ -1,6 +1,6 @@
 # Tailwind CSS + DaisyUI Migration
 
-This project is migrating from **Bootstrap 5.3.3** to **Tailwind CSS 3.4 + DaisyUI**.
+This project migrated from **Bootstrap 5.3.3** to **Tailwind CSS + DaisyUI**, and subsequently upgraded from **Tailwind CSS 3.4** to **Tailwind CSS 4**.
 
 ## Migration Status
 
@@ -32,9 +32,22 @@ This project is migrating from **Bootstrap 5.3.3** to **Tailwind CSS 3.4 + Daisy
 - [x] Preserved ReconnectModal.razor.css (critical Blazor reconnection logic)
 - [x] Verified Tailwind CSS animations in tailwind.config.js
 
+### ✅ Phase 5: Upgrade to Tailwind CSS v4 + DaisyUI v5 (COMPLETE)
+- [x] Updated `package.json`: `tailwindcss` → `^4.0.0`, `daisyui` → `^5.0.0`
+- [x] Added `@tailwindcss/cli` devDependency (CLI is now a separate package in v4)
+- [x] Updated npm scripts: `npx tailwindcss` → `npx @tailwindcss/cli`
+- [x] Rewrote `wwwroot/css/tailwind.input.css` for v4 CSS-first config:
+  - Replaced `@tailwind base/components/utilities` with `@import "tailwindcss"`
+  - Added `@source` directives for `.razor` file scanning
+  - Added `@plugin "daisyui"` with theme configuration
+  - Moved custom keyframe animations to `@theme` + `@keyframes`
+- [x] Deleted `tailwind.config.js` (config now lives in the CSS file)
+- [x] Verified CSS build: Tailwind v4.2.2 + DaisyUI 5.5.19
+- [x] Verified .NET build: 0 errors, 0 warnings
+
 ## 🎉 Migration Complete!
 
-**All 6 components successfully migrated from Bootstrap 5.3.3 to Tailwind CSS 3.4 + DaisyUI 4.12.24**
+**All 6 components successfully migrated and running on Tailwind CSS 4 + DaisyUI 5.**
 
 ### Migration Summary
 
